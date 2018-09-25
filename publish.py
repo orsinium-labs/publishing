@@ -13,8 +13,8 @@ with open(CONFIG_PATH) as stream:
 
 class Trello:
     def __init__(self, config):
-        self.board_name = config['board']
-        self.list_name = config['list']
+        self.board_name = config.get('board')
+        self.list_name = config.get('list')
         self.board_id = config.get('board_id')
         self.list_id = config.get('list_id')
 
@@ -80,13 +80,15 @@ class Trello:
     def save(self, config):
         if 'board' in config:
             del config['board']
-        config['board_id'] = self.board_id
-        config['board_id'].comment(self.board_name)
+        if self.board_name and self.board_id:
+            config['board_id'] = self.board_id
+            config['board_id'].comment(self.board_name)
 
         if 'list' in config:
             del config['list']
-        config['list_id'] = self.list_id
-        config['list_id'].comment(self.list_name)
+        if self.list_name and self.list_id:
+            config['list_id'] = self.list_id
+            config['list_id'].comment(self.list_name)
 
     def get_posts(self):
         board = self.get_board()
