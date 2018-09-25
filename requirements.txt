@@ -1,0 +1,4 @@
+markdown2
+py-trello
+requests
+tomlkit
