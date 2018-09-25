@@ -1,0 +1,13 @@
+[trello]
+# https://trello.com/app-key
+key = '...'
+token = '...'
+oauth_secret = '...'
+
+board = '...'
+list = '...'
+
+[ifttt]
+# https://ifttt.com/services/maker_webhooks/settings
+key = '...'
+event = '...'
