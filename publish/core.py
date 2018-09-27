@@ -1,10 +1,10 @@
 from .trello import Trello
-from .config import load
+from .config import load, dump
 from .ifttt import IFTTT
 
 
-def publish():
-    config = load()
+def publish(path=None):
+    config = load(path)
 
     trello_connections = dict()
     for name, credentials in config['connections'].items():
@@ -16,3 +16,5 @@ def publish():
         for card in trello.get_posts(rule):
             print(card.name)
             ifttt.send(card)
+
+    dump(config=config, path=path)
