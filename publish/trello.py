@@ -1,29 +1,23 @@
 from datetime import datetime, timezone
-
-import tomlkit
-import requests
-from markdown2 import markdown
 from trello import TrelloClient
 
 
-CONFIG_PATH = './config.toml'
-with open(CONFIG_PATH) as stream:
-    config = tomlkit.parse(stream.read())
+def get_connection(config):
+    return TrelloClient(
+        api_key=config['key'],
+        token=config['token'],
+        token_secret=config['oauth_secret'],
+    )
 
 
 class Trello:
-    def __init__(self, config):
+    def __init__(self, client, config):
         self.board_name = config.get('board')
         self.list_name = config.get('list')
         self.board_id = config.get('board_id')
         self.list_id = config.get('list_id')
 
-        self.client = TrelloClient(
-            api_key=config['key'],
-            # api_secret=,
-            token=config['token'],
-            token_secret=config['oauth_secret'],
-        )
+        self.client = client
 
     def get_board(self):
         if self.board_id:
@@ -98,24 +92,3 @@ class Trello:
             if card.due_date and card.due_date <= now:
                 yield card
                 card.delete()
-
-
-def publish():
-    URL = 'https://maker.ifttt.com/trigger/{event}/with/key/{key}'.format(
-        event=config['ifttt']['event'],
-        key=config['ifttt']['key'],
-    )
-    trello = Trello(config['trello'])
-
-    for card in trello.get_posts():
-        print(card.name)
-        post = markdown(card.description)  # convert md to html
-        requests.post(URL, json=dict(value1=post))
-
-    trello.save(config['trello'])
-    with open(CONFIG_PATH, 'w') as stream:
-        stream.write(tomlkit.dumps(config))
-
-
-if __name__ == '__main__':
-    publish()
