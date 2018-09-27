@@ -93,7 +93,8 @@ class Trello:
         for card in lst.list_cards():
             if card.due_date and card.due_date <= now:
                 yield card
-                card.delete()
+                if rule['delete']:
+                    card.delete()
 
         self.save(
             rule=rule,

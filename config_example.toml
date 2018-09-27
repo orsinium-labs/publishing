@@ -25,3 +25,5 @@ fields = ['description', 'name', 'due_date']
 # dash:     -- -> —
 # links:    word link -> [word](link)
 converters = ['html', 'dash', 'links']
+# delete card after rule apply
+delete = true
