@@ -19,5 +19,5 @@ After that edit `config.toml`.
 ## Send cards to IFTTT
 
 ```bash
-python3 publish.py
+python3 -m publish
 ```

@@ -1,13 +1,29 @@
-[trello]
+[ifttt]
+# https://ifttt.com/services/maker_webhooks/settings
+key = '...'
+
+[connections.main]
 # https://trello.com/app-key
 key = '...'
 token = '...'
 oauth_secret = '...'
 
-board = '...'
-list = '...'
-
-[ifttt]
-# https://ifttt.com/services/maker_webhooks/settings
-key = '...'
+[[rules]]
+# name of trello connection
+connection = 'main'
+# name of IFTTT webhook event
 event = '...'
+# trello board name
+board = '...'
+# trello list name
+list = '...'
+# fields from card to values in IFTTT webhook
+# available fields: description, name, due_date
+fields = ['description', 'name', 'due_date']
+# available converters:
+# html:     Markdown -> HTML
+# dash:     -- -> —
+# links:    word link -> [word](link)
+converters = ['html', 'dash', 'links']
+# delete card after rule apply
+delete = true
