@@ -21,9 +21,10 @@ list = '...'
 # available fields: description, name, due_date
 fields = ['description', 'name', 'due_date']
 # available converters:
-# html:     Markdown -> HTML
-# dash:     -- -> —
-# links:    word link -> [word](link)
-converters = ['html', 'telegram_html', 'dash', 'links']
+# html:             Markdown -> HTML
+# telegram_html:    Markdown -> Telegram compatible HTML
+# dash:             -- -> —
+# links:            word link -> [word](link)
+converters = ['telegram_html', 'dash', 'links']
 # delete card after rule apply
 delete = true
