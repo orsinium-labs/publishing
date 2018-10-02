@@ -30,5 +30,4 @@ class IFTTT:
         return request
 
     def send(self, card):
-        print(card.name)
         requests.post(self.url, json=self.make_request(card))

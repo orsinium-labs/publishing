@@ -54,10 +54,7 @@ class Parser:
                 tokens.append(Token(name=name, match=match))
                 text = self.extract_match(match=match, text=text)
 
-        while self.placeholder * 2 in text:
-            text = text.replace(self.placeholder * 2, self.placeholder)
-
-        tokens.sort(key=lambda token: token.match.start())
+        tokens.sort(key=lambda token: token.match.start(), reverse=True)
 
         for token in tokens:
             text = self.insert_sub(match=token.match, text=text, sub=self.subs[token.name])
@@ -70,5 +67,7 @@ class Parser:
         return before + holder + after
 
     def insert_sub(self, match, text, sub):
+        before = text[:match.start()]
+        after = text[match.end():]
         holder = match.expand(sub)
-        return text.replace(self.placeholder, holder, 1)
+        return before + holder + after
