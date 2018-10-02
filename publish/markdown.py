@@ -13,7 +13,8 @@ Token = namedtuple('Token', ['name', 'match'])
 class Parser:
     # https://github.com/lepture/mistune/blob/583d358296bb10c0f66ba643e9ee574e8af96db0/mistune.py#L464
     parsers = OrderedDict((
-        ('pre', re.compile(r'\`{3}([\s\S]+?)\`{3}')),
+        ('pre', re.compile(r'\`{3}\n?([\s\S]+?)\n?\`{3}')),
+        ('code', re.compile(r'\`([\s\S]+?)\`')),
         ('a', re.compile(
             r'!?\[('
             r'(?:\[[^^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*'
@@ -31,20 +32,22 @@ class Parser:
             r'|'
             r'\*((?:\*\*|[^\*])+?)\*(?!\*)'  # *word*
         )),
-        ('br', re.compile(r' {2,}\n(?!\s*$)')),
+        ('br', re.compile(r'(\n)')),
     ))
 
     subs = dict(
         b=r'<b>\1\2</b>',
         i=r'<i>\1\2</i>',
         a=r'<a href="\3">\1</a>',
-        br=r'\1<br/>',
-        pre=r'<pre>\1</pre>',
+        br=r'<br/>\1',
+        pre=r'<pre>\1</pre>\n',
+        code=r'<code>\1</code>',
     )
 
     placeholder = '§'
 
     def __call__(self, text):
+        text = text.strip()
         tokens = []
         for name, parser in self.parsers.items():
             for match in parser.finditer(text):

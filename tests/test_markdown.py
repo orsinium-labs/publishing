@@ -10,6 +10,12 @@ def test_a():
     assert telegram_html(md) == html
 
 
+def test_br():
+    md = 'text\nme'
+    html = 'text<br/>\nme'
+    assert telegram_html(md) == html
+
+
 def test_i():
     md = '*text* me'
     html = '<i>text</i> me'
@@ -31,20 +37,18 @@ def test_b():
 
 
 def test_pre():
-    md = """
-    never
-    ```
-    gonna __give__
-    ```
-    you up
-    """
-    html = """
-    never
-    <pre>
-    gonna __give__
-    </pre>
-    you up
-    """
+    md = 'never\n ```\ngonna __give__\n```\nyou up'
+    html = 'never<br/>\n <pre>gonna __give__</pre>\nyou up'
+    assert telegram_html(md) == html
+
+    md = '__text__ me'
+    html = '<b>text</b> me'
+    assert telegram_html(md) == html
+
+
+def test_code():
+    md = 'never `gonna __give__` you up'
+    html = 'never <code>gonna __give__</code> you up'
     assert telegram_html(md) == html
 
     md = '__text__ me'
