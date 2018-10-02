@@ -34,16 +34,14 @@ def test_pre():
     md = """
     never
     ```
-    gonna
-    __give__
+    gonna __give__
     ```
     you up
     """
     html = """
     never
     <pre>
-    gonna
-    __give__
+    gonna __give__
     </pre>
     you up
     """
@@ -51,4 +49,10 @@ def test_pre():
 
     md = '__text__ me'
     html = '<b>text</b> me'
+    assert telegram_html(md) == html
+
+
+def test_couple():
+    md = 'never *gonna* **give** _you_ __up__'
+    html = 'never <i>gonna</i> <b>give</b> <i>you</i> <b>up</b>'
     assert telegram_html(md) == html
