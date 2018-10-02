@@ -24,6 +24,6 @@ fields = ['description', 'name', 'due_date']
 # html:     Markdown -> HTML
 # dash:     -- -> —
 # links:    word link -> [word](link)
-converters = ['html', 'dash', 'links']
+converters = ['html', 'telegram_html', 'dash', 'links']
 # delete card after rule apply
 delete = true
