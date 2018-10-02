@@ -3,7 +3,13 @@
 Trigger ifttt events with text from trello card when due date is reached.
 
 Features:
+1. Read cards from Trello.
+1. Get any fields.
+1. Drop cards after it (if you want)
 1. Convert Markdown to HTML.
+1. Convert Markdown to Telegram compatible HTML.
+1. Multiple rules and Trello accounts support.
+
 
 ## Installation
 
