@@ -30,7 +30,7 @@ class Parser:
         ('i', re.compile(
             r'\b_((?:__|[^_])+?)_\b'  # _word_
             r'|'
-            r'\*((?:\*\*|[^\*])+?)\*(?!\*)'  # *word*
+            r'\*((?:[^\s])(?:\*\*|[^\*])+?)\*(?!\*)'  # *word*
         )),
         ('br', re.compile(r'(\n)')),
     ))
@@ -61,6 +61,8 @@ class Parser:
         return text
 
     def extract_match(self, match, text):
+        if self.placeholder in match.group():
+            raise ValueError('tags intersection', match.group())
         before = text[:match.start()]
         after = text[match.end():]
         holder = self.placeholder * (match.end() - match.start())
